@@ -1,0 +1,931 @@
+{
+  "openapi": "3.0.2",
+  "x-stoplight": {
+    "id": "pezadnw9u4nxq"
+  },
+  "info": {
+    "title": "TRAIDY_GUI",
+    "version": "1.1.0",
+    "description": "Local API between TRAIDY and the GUI",
+    "contact": {
+      "name": "Amer Bakhach",
+      "email": "Amer.Bakhach@finaid.solutions"
+    },
+    "license": {
+      "name": "Proprietary License",
+      "url": "https://www.finaid.solutions/licenses/TRAIDY"
+    },
+    "x-logo": {
+      "url": ""
+    }
+  },
+  "servers": [
+    {
+      "url": "https://localhost"
+    }
+  ],
+  "paths": {
+    "/performance": {
+      "get": {
+        "tags": [
+          "performance"
+        ],
+        "operationId": "get_performance_data",
+        "description": "Retrieve the performance data from the TRAIDY application as percentages. Interval 3s-4s",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "fiveDays": "10%",
+                      "oneMonth": "6.09%",
+                      "threeMonths": "50.01%",
+                      "oneYear": "11.43%",
+                      "ytd": "14.6%"
+                    }
+                  },
+                  "properties": {
+                    "fiveDays": {
+                      "type": "number"
+                    },
+                    "oneMonth": {
+                      "type": "number"
+                    },
+                    "threeMonths": {
+                      "type": "number"
+                    },
+                    "oneYear": {
+                      "type": "number"
+                    },
+                    "ytd": {
+                      "type": "number"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "pnLSinceInception": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    },
+                    "percentage": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "fiveDays",
+                    "oneMonth",
+                    "threeMonths",
+                    "oneYear",
+                    "ytd",
+                    "Title",
+                    "PnLSinceInception",
+                    "USD",
+                    "Percentage"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663670328798
+    },
+    "/signals": {
+      "get": {
+        "tags": [],
+        "operationId": "get_signals",
+        "description": "Fetch the data for Today's signals tab. ",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "SignalsCount": {
+                      "type": "integer"
+                    },
+                    "Signals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "signalIndex": {
+                            "type": "integer"
+                          },
+                          "Ticker": {
+                            "type": "string"
+                          },
+                          "Action": {
+                            "type": "string"
+                          },
+                          "Shares": {
+                            "type": "integer"
+                          },
+                          "Price": {
+                            "type": "number"
+                          },
+                          "State": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "SignalsCount": 100,
+                      "Signals": [
+                        {
+                          "signalIndex": 0,
+                          "Ticker": "tiker name",
+                          "Action": "An action",
+                          "Shares": 99,
+                          "Price": 20.33,
+                          "State": "A state"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "SignalsCount": 100,
+                      "Signals": [
+                        {
+                          "signalIndex": 0,
+                          "Ticker": "tiker name",
+                          "Action": "An action",
+                          "Shares": 99,
+                          "Price": 20.33,
+                          "State": "A state"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-last-modified": 1663670354151
+    },
+    "/status": {
+      "get": {
+        "tags": [],
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "operationId": "get_status_data",
+        "description": "Retrieve status data from TRAIDY application. Interval 5s-7s",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "currentPortfolioValue_USD": 100,
+                      "currentPortfolioValue_perc": 50.5,
+                      "grossPortfolioValue_USD": 30.3,
+                      "grossPortfolioValue_perc": 20.15,
+                      "cashAvailable_USD": 90000.01,
+                      "cashAvailable_perc": 34.56,
+                      "TodayUnrealizedPnL": 10,
+                      "TodayRealizedPnL": -1,
+                      "TodayOpenedPositions": 15,
+                      "TodayClosedPositions": 21
+                    }
+                  },
+                  "properties": {
+                    "currentPortfolioValue_USD": {
+                      "type": "integer"
+                    },
+                    "currentPortfolioValue_perc": {
+                      "type": "number"
+                    },
+                    "grossPortfolioValue_USD": {
+                      "type": "number"
+                    },
+                    "grossPortfolioValue_perc": {
+                      "type": "number"
+                    },
+                    "cashAvailable_USD": {
+                      "type": "number"
+                    },
+                    "cashAvailable_perc": {
+                      "type": "number"
+                    },
+                    "UnrealizedPnL": {
+                      "type": "number"
+                    },
+                    "TodayRealizedPnL": {
+                      "type": "number"
+                    },
+                    "TodayOpenedPositions": {
+                      "type": "number"
+                    },
+                    "TodayClosedPositions": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663673258453
+    },
+    "/trades/historical": {
+      "get": {
+        "tags": [],
+        "description": "Returns historiacal trades between startDate and endDate. Interval 7s-10s",
+        "operationId": "get_historical_trades",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "startDate"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "HistoricalTradesCount": {
+                      "type": "integer"
+                    },
+                    "Trades": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tradeIndex": {
+                            "type": "integer"
+                          },
+                          "Ticker": {
+                            "type": "string"
+                          },
+                          "Action": {
+                            "type": "string"
+                          },
+                          "Shares": {
+                            "type": "integer"
+                          },
+                          "Price": {
+                            "type": "number"
+                          },
+                          "Date": {
+                            "type": "string"
+                          },
+                          "RealizedPnL": {
+                            "type": "number"
+                          },
+                          "Commission": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "HistoricalTradesCount": 100,
+                      "Trades": [
+                        {
+                          "tradeIndex": 0,
+                          "Ticker": "tiker name",
+                          "Action": "An action",
+                          "Shares": 99,
+                          "Price": 20.33,
+                          "Date": "a date",
+                          "RealizedPnL": 100.54,
+                          "Commission": 3.54
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "HistoricalTradesCount": 100,
+                      "Trades": [
+                        {
+                          "tradeIndex": 0,
+                          "Ticker": "tiker name",
+                          "Action": "An action",
+                          "Shares": 99,
+                          "Price": 20.33,
+                          "Date": "a date",
+                          "RealizedPnL": 100.54,
+                          "Commission": 3.54
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663673292250
+    },
+    "/holdings/current": {
+      "get": {
+        "tags": [],
+        "operationId": "get_current_holdings",
+        "description": "Get the current holdings for the Current Holdings tab",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "CurrentHoldingsCount": {
+                      "type": "integer"
+                    },
+                    "Holdings": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "holdingIndex": {
+                            "type": "integer"
+                          },
+                          "Ticker": {
+                            "type": "string"
+                          },
+                          "AveragePrice": {
+                            "type": "number"
+                          },
+                          "Shares": {
+                            "type": "integer"
+                          },
+                          "MarketValue": {
+                            "type": "number"
+                          },
+                          "UnRealizedPnL": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "CurrentHoldingsCount": 100,
+                      "Holdings": [
+                        {
+                          "holdingIndex": 0,
+                          "Ticker": "tiker name",
+                          "AveragePrice": 23.17,
+                          "Shares": 99,
+                          "MarketValue": 2000.33,
+                          "UnRealizedPnL": 100.54
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "CurrentHoldingsCount": 0,
+                      "Holdings": [
+                        {
+                          "holdingIndex": 0,
+                          "Ticker": "string",
+                          "AveragePrice": 0,
+                          "Shares": 0,
+                          "MarketValue": 0,
+                          "UnRealizedPnL": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663673322985
+    },
+    "/positions/close": {
+      "post": {
+        "tags": [],
+        "operationId": "post_close_position",
+        "description": "Manually close a position.",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "\"Ticker\"": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663673406843
+    },
+    "/internal/accounts/profile": {
+      "get": {
+        "operationId": "get_account_profile",
+        "summary": "Gets the profile of the logged in user",
+        "description": "Gets the profile of the logged in user.",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accountNumber": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "initialCapital": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "\"email\"": {
+                    "type": "string"
+                  },
+                  "\"TelephoneNumber\"": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "x-last-modified": 1663673502927
+    },
+    "/internal/settings/trading": {
+      "put": {
+        "tags": [],
+        "operationId": "update_trading_settings",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "\"DailyTotoalInvest\"": {
+                    "type": "number"
+                  },
+                  "\"MaxPositionSize\"": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "406": {
+            "description": "Not Acceptable"
+          }
+        }
+      },
+      "x-last-modified": 1663673535974
+    },
+    "/advancedmode": {
+      "summary": "OK, I do not understand this one yet.",
+      "get": {
+        "tags": [],
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "AdvancedModeCount": {
+                      "type": "integer"
+                    },
+                    "AdvancedMode": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "AdvancedModeIndex": {
+                            "type": "integer"
+                          },
+                          "Ticker": {
+                            "type": "string"
+                          },
+                          "AveragePrice": {
+                            "type": "number"
+                          },
+                          "Shares": {
+                            "type": "integer"
+                          },
+                          "MarketValue": {
+                            "type": "number"
+                          },
+                          "UnRealizedPnL_USD": {
+                            "type": "number"
+                          },
+                          "UnRealizedPnL_perc": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "AdvancedModeCount": 0,
+                      "AdvancedMode": [
+                        {
+                          "AdvancedModeIndex": 0,
+                          "Ticker": "string",
+                          "AveragePrice": 0.43,
+                          "Shares": 0,
+                          "MarketValue": 0.1,
+                          "UnRealizedPnL_USD": 0.01,
+                          "UnRealizedPnL_perc": 0.1
+                        }
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "AdvancedModeCount": 0,
+                      "AdvancedMode": [
+                        {
+                          "AdvancedModeIndex": 0,
+                          "Ticker": "string",
+                          "AveragePrice": 0.43,
+                          "Shares": 0,
+                          "MarketValue": 0.1,
+                          "UnRealizedPnL_USD": 0.01,
+                          "UnRealizedPnL_perc": 0.1
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "x-last-modified": 1663674313997
+    },
+    "/internal/system/notifications/connections": {
+      "get": {
+        "tags": [],
+        "operationId": "get_connection_stauts",
+        "description": "Get the status of connections in the system e.g. to Interactive Broker. Interval 3s-5s",
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "\"IB_connected\"": {
+                      "type": "boolean"
+                    },
+                    "\"Server_connected\"": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "x-last-modified": 1663674363068
+    },
+    "/internal/login": {
+      "servers": [
+        {
+          "url": "http://localhost:8000",
+          "description": "The TRAIDY application"
+        }
+      ],
+      "post": {
+        "requestBody": {
+          "description": "User login information - username is an email.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "joe.blogs@thedomain.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "supersecretpawordthingy"
+                  }
+                }
+              },
+              "examples": {
+                "example_1": {
+                  "value": {
+                    "email": "joe.blogs@example.com",
+                    "password": "supersecretpassword"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "tags": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jwt": {
+                      "type": "string"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "jwt": "eyJhbGciOiJIUzI1NiJ9.eyJHZW5lcmF0ZWRfYXQiOiIxNjYzNjg1NjkwIiwiRW1haWwiOiJqb2UuYmxvZ3NAZXhhbXBsZS5jb20iLCJJc3N1ZXIiOiJUUkFJRFkifQ.y29032GzUSKBOFg65arZ-LHSTwb5vT8Xof1mwzqOw7Y"
+                    }
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "jwt": "eyJhbGciOiJIUzI1NiJ9.eyJHZW5lcmF0ZWRfYXQiOiIxNjYzNjg1NjkwIiwiRW1haWwiOiJqb2UuYmxvZ3NAZXhhbXBsZS5jb20iLCJJc3N1ZXIiOiJUUkFJRFkifQ.y29032GzUSKBOFg65arZ-LHSTwb5vT8Xof1mwzqOw7Y"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Successful login"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "operationId": "internal_login_post",
+        "description": "Log innto the GUI and receive a JWT as token"
+      }
+    },
+    "/equity": {
+      "get": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "startDate",
+            "description": "Starting date for the series of equity values to be returned",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "endDate",
+            "description": "The last date of the equity value series to be returned. If left off, assume the latests date/timestamp.",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "JsonTs": "regular",
+                      "BasePeriod": [
+                        1,
+                        "d"
+                      ],
+                      "Observations": [
+                        [
+                          "2022-09-01",
+                          {
+                            "value": 14321.01
+                          }
+                        ],
+                        [
+                          {
+                            "value": 14323.01
+                          }
+                        ],
+                        [
+                          {
+                            "value": 14521.01
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "description": "See https://github.com/aarong/json-timeseries"
+                }
+              }
+            },
+            "description": "Succesfully retrieved the equity value(s)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          }
+        ],
+        "description": "Returns values in format described by https://github.com/aarong/json-timeseries for the equity. ",
+        "operationId": "get_equity"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": ""
+      },
+      "JWTAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
