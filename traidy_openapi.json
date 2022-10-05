@@ -21,7 +21,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost"
+      "url": "https://localhost:8080"
     }
   ],
   "paths": {
